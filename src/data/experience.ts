@@ -32,9 +32,9 @@ export interface CertificationItem {
 
 export const certifications: CertificationItem[] = [
   {
-    name: "Power BI | Businesse Intelligence: Data Science Academy",
-    institution: "Centro Universitário Senac: Santo Amaro",
-    year: "Ano: 2023 - 2028",
-    url: "https://www.sp.senac.br/centro-universitario-senac-santo-amaro/graduacao",
+    name: "Microsoft Power BI: Businesse Intelligence | ",
+    institution: "Data Science Academy",
+    year: "Ano: 06/2025 - 08/2025",
+    url: "https://www.datascienceacademy.com.br/certificate_v2/6462fe1b2bb04988150abc99/user/68498b6b7c3b00c7730b110e",
   },
 ];
