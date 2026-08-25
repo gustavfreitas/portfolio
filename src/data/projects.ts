@@ -54,7 +54,7 @@ export const projects: Project[] = [
       "Prompt Engineering",
     ],
     featured: true,
-    github: "https://github.com/PLACEHOLDER_GITHUB/feedbacks-bancarios",
+    github: "https://github.com/gustavfreitas/feedback-bancario",
     problem:
       "Bancos recebem grandes volumes de feedback de clientes, mas raramente possuem um processo estruturado para transformar esse material em indicadores acionáveis de Customer Experience.",
     solution:
