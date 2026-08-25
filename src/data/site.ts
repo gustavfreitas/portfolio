@@ -7,7 +7,7 @@ export const site = {
   role: "Data Analytics | Business Intelligence | Python | SQL",
   tagline:
     "Transformo dados em análises, indicadores e soluções que apoiam decisões de negócio.",
-  location: "Localização: São Paulo, SP — Brasil",
+  location: "São Paulo: SP — Brasil",
   availability: "Disponível para estágio e oportunidades júnior em Dados",
   email: "gu.gusta.freitas@hotmail.com",
   links: {
