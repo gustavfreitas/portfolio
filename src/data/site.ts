@@ -7,18 +7,18 @@ export const site = {
   role: "Data Analytics | Business Intelligence | Python | SQL",
   tagline:
     "Transformo dados em análises, indicadores e soluções que apoiam decisões de negócio.",
-  location: "PLACEHOLDER: Cidade, UF — Brasil",
+  location: "Localização: São Paulo, SP — Brasil",
   availability: "Disponível para estágio e oportunidades júnior em Dados",
-  email: "PLACEHOLDER_EMAIL@dominio.com",
+  email: "gu.gusta.freitas@hotmail.com",
   links: {
-    github: "https://github.com/PLACEHOLDER_GITHUB",
-    linkedin: "https://linkedin.com/in/PLACEHOLDER_LINKEDIN",
+    github: "https://github.com/gustavfreitas",
+    linkedin: "https://www.linkedin.com/in/gs-freitas/",
   },
   seo: {
     title: "Gustavo Freitas | Data Analytics & Business Intelligence",
     description:
       "Portfolio de Gustavo Freitas — projetos em Data Analytics, Business Intelligence, Python, SQL, ETL e Power BI.",
-    url: "https://PLACEHOLDER-dominio.com",
+    url: "https://portfolio-tawny-one-99.vercel.app/#top",
   },
   about: {
     summary:
@@ -32,8 +32,8 @@ export const site = {
   },
   education: {
     degree: "Bacharelado em Ciência da Computação",
-    institution: "PLACEHOLDER: Nome da instituição",
-    period: "PLACEHOLDER: 20XX — em andamento",
+    institution: "Centro Universitário Senac: Campus Santo Amaro",
+    period: "Período: 2023 — em andamento",
   },
 };
 
