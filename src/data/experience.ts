@@ -10,7 +10,7 @@ export const experience: ExperienceItem[] = [
   {
     role: "Estagiário de T.I. — Sistemas",
     company: "INBRANDS S/A",
-    period: "PLACEHOLDER: mês/ano — mês/ano",
+    period: "Período: 06/2025 — 06/2026",
     summary:
       "Atuação em sistemas e processos internos, com envolvimento em dados, fornecedores, documentos e apoio a análises operacionais.",
     highlights: [
@@ -32,9 +32,9 @@ export interface CertificationItem {
 
 export const certifications: CertificationItem[] = [
   {
-    name: "PLACEHOLDER: Nome da certificação",
-    institution: "PLACEHOLDER: Instituição",
-    year: "PLACEHOLDER: 20XX",
-    url: "#",
+    name: "Power BI | Businesse Intelligence: Data Science Academy",
+    institution: "Centro Universitário Senac: Santo Amaro",
+    year: "Ano: 2023 - 2028",
+    url: "https://www.sp.senac.br/centro-universitario-senac-santo-amaro/graduacao",
   },
 ];
