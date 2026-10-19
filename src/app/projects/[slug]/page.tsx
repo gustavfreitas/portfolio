@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Github, ImageOff } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Github, ImageOff, Lock } from "lucide-react";
 import Image from "next/image";
 import { projects, getProjectBySlug, getRelatedProjects } from "@/data/projects";
 import { site } from "@/data/site";
@@ -238,6 +238,25 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               </Block>
             )}
 
+            {project.confidential ? (
+              <Block label="Confidencialidade">
+                <div className="flex items-start gap-4 rounded-lg border border-border bg-base-panel/60 p-6">
+                  <Lock size={18} className="mt-0.5 shrink-0 text-signal-amber" />
+                  <div>
+                    <p className="text-ink-primary">
+                      Capturas de tela não disponíveis publicamente.
+                    </p>
+                    <p className="mt-2 text-sm text-ink-secondary">
+                      Este projeto foi desenvolvido em contexto profissional e
+                      suas telas contêm dados sensíveis e confidenciais da
+                      empresa. Por isso, não exibo screenshots aqui. Posso
+                      explicar a solução, a arquitetura e os resultados em
+                      detalhe durante uma conversa.
+                    </p>
+                  </div>
+                </div>
+              </Block>
+            ) : (
             <Block label={project.images ? "Visualizações" : "Screenshots"}>
               {project.images ? (
                 <div className="space-y-6">
@@ -270,6 +289,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               )}
             </Block>
+            )}
           </div>
 
           {/* Sidebar */}

@@ -46,6 +46,8 @@ export interface Project {
   resultsDetail?: string[];
   limitations?: string[];
   images?: ProjectImage[];
+  // Projetos de contexto profissional: oculta screenshots e exibe aviso.
+  confidential?: boolean;
 }
 
 export const projects: Project[] = [
@@ -393,6 +395,7 @@ export const projects: Project[] = [
       "Data Warehouse",
     ],
     featured: false,
+    confidential: true,
     problem:
       "Dados de atendimento disponíveis apenas via API, sem estrutura histórica nem modelagem preparada para análise.",
     solution:
@@ -441,6 +444,7 @@ export const projects: Project[] = [
     category: ["BI", "Data Analytics"],
     technologies: ["Power BI", "Excel", "Power Query", "SQL", "LINX ERP"],
     featured: false,
+    confidential: true,
     problem:
       "Processos operacionais distribuídos entre lojas, com dados dispersos no ERP e baixa visibilidade consolidada para tomada de decisão.",
     solution:
