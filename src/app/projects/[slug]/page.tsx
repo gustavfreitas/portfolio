@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Github, ImageOff } from "lucide-react";
-import { projects, getProjectBySlug } from "@/data/projects";
+import Image from "next/image";
+import { projects, getProjectBySlug, getRelatedProjects } from "@/data/projects";
 import { site } from "@/data/site";
 import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
@@ -49,7 +50,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   const project = getProjectBySlug(params.slug);
   if (!project) notFound();
 
-  const related = projects.filter((p) => p.slug !== project.slug).slice(0, 2);
+  const related = getRelatedProjects(project, 2);
 
   return (
     <article className="py-16">
@@ -221,13 +222,53 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               )}
             </Block>
 
-            <Block label="Screenshots">
-              <div className="flex items-center gap-3 rounded-lg border border-dashed border-border p-6 text-ink-muted">
-                <ImageOff size={18} />
-                <p className="font-mono text-xs">
-                  Capturas de tela serão adicionadas em breve.
-                </p>
-              </div>
+            {project.limitations && (
+              <Block label="Limitações">
+                <ul className="space-y-2.5">
+                  {project.limitations.map((l) => (
+                    <li
+                      key={l}
+                      className="flex items-start gap-3 text-ink-secondary"
+                    >
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-signal-amber" />
+                      {l}
+                    </li>
+                  ))}
+                </ul>
+              </Block>
+            )}
+
+            <Block label={project.images ? "Visualizações" : "Screenshots"}>
+              {project.images ? (
+                <div className="space-y-6">
+                  {project.images.map((img) => (
+                    <figure key={img.src}>
+                      <div className="overflow-hidden rounded-lg border border-border bg-white">
+                        <Image
+                          src={img.src}
+                          alt={img.alt}
+                          width={img.width}
+                          height={img.height}
+                          sizes="(min-width: 1024px) 60vw, 100vw"
+                          className="h-auto w-full"
+                        />
+                      </div>
+                      {img.caption && (
+                        <figcaption className="mt-2 font-mono text-xs text-ink-muted">
+                          {img.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 rounded-lg border border-dashed border-border p-6 text-ink-muted">
+                  <ImageOff size={18} />
+                  <p className="font-mono text-xs">
+                    Capturas de tela serão adicionadas em breve.
+                  </p>
+                </div>
+              )}
             </Block>
           </div>
 

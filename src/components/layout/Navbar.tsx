@@ -2,28 +2,54 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, Github, Linkedin, ArrowUpRight } from "lucide-react";
 import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 
+// Ordem igual à das seções na página inicial.
 const navItems = [
-  { label: "Sobre", href: "/#sobre" },
-  { label: "Projetos", href: "/#projetos" },
-  { label: "Experiência", href: "/#experiencia" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Contato", href: "/#contato" },
+  { label: "Sobre", href: "/#sobre", id: "sobre" },
+  { label: "Skills", href: "/#skills", id: "skills" },
+  { label: "Projetos", href: "/#projetos", id: "projetos" },
+  { label: "Experiência", href: "/#experiencia", id: "experiencia" },
+  { label: "Contato", href: "/#contato", id: "contato" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Destaca no menu a seção que está na tela (apenas na página inicial).
+  useEffect(() => {
+    if (pathname !== "/") {
+      setActive(null);
+      return;
+    }
+    const sections = navItems
+      .map((item) => document.getElementById(item.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, [pathname]);
 
   return (
     <header
@@ -47,7 +73,11 @@ export function Navbar() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="font-mono text-xs uppercase tracking-wide text-ink-secondary transition-colors hover:text-accent"
+                aria-current={active === item.id ? "true" : undefined}
+                className={cn(
+                  "font-mono text-xs uppercase tracking-wide transition-colors hover:text-accent",
+                  active === item.id ? "text-accent" : "text-ink-secondary"
+                )}
               >
                 {item.label}
               </Link>

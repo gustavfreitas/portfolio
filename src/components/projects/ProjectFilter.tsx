@@ -18,6 +18,12 @@ export function ProjectFilter() {
 
   const filters: Filter[] = [ALL, ...projectCategories];
 
+  function countFor(f: Filter) {
+    return f === ALL
+      ? projects.length
+      : projects.filter((p) => p.category.includes(f)).length;
+  }
+
   return (
     <div>
       <div
@@ -32,13 +38,21 @@ export function ProjectFilter() {
             aria-selected={active === f}
             onClick={() => setActive(f)}
             className={cn(
-              "rounded-md border px-3.5 py-2 font-mono text-xs transition-colors",
+              "inline-flex items-center gap-2 rounded-md border px-3.5 py-2 font-mono text-xs transition-colors",
               active === f
                 ? "border-accent/40 bg-accent-dim text-accent"
                 : "border-border text-ink-secondary hover:border-accent/30 hover:text-ink-primary"
             )}
           >
             {f}
+            <span
+              className={cn(
+                "text-[10px]",
+                active === f ? "text-accent/70" : "text-ink-muted"
+              )}
+            >
+              {countFor(f)}
+            </span>
           </button>
         ))}
       </div>

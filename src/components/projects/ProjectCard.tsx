@@ -42,11 +42,14 @@ export function ProjectCard({ project }: { project: Project }) {
             className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           />
         </span>
-        {project.github && (
-          <span className="text-ink-muted">
-            <Github size={16} />
-          </span>
-        )}
+        <span className="flex items-center gap-3 text-ink-muted">
+          {project.demo && (
+            <span className="rounded border border-signal-green/30 px-1.5 py-0.5 font-mono text-[10px] text-signal-green">
+              demo online
+            </span>
+          )}
+          {project.github && <Github size={16} />}
+        </span>
       </div>
     </Link>
   );

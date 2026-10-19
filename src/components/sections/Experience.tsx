@@ -12,9 +12,13 @@ export function Experience() {
           title="Experiência"
         />
 
-        <div className="space-y-8">
+        <div className="relative space-y-8 border-l border-border pl-6 md:pl-10">
           {experience.map((item, i) => (
-            <Reveal key={item.company} delay={i * 0.06}>
+            <Reveal key={item.company} delay={i * 0.06} className="relative">
+              <span
+                aria-hidden="true"
+                className="absolute -left-[31px] top-8 h-3 w-3 rounded-full border-2 border-accent bg-base md:-left-[47px]"
+              />
               <div className="glow-card rounded-lg p-6 md:p-8">
                 <div className="flex flex-col justify-between gap-2 md:flex-row md:items-baseline">
                   <h3 className="font-display text-xl font-medium text-ink-primary">

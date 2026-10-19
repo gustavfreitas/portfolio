@@ -22,8 +22,15 @@ export function Contact() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Formulário preparado para integração futura (ex.: rota de API + serviço de e-mail).
-    // Por enquanto, apenas confirma o envio na interface.
+    // Sem backend: monta um e-mail pronto no app de e-mail de quem visita.
+    const data = new FormData(e.currentTarget);
+    const name = String(data.get("name") ?? "");
+    const email = String(data.get("email") ?? "");
+    const message = String(data.get("message") ?? "");
+
+    const subject = encodeURIComponent(`Contato pelo portfólio — ${name}`);
+    const body = encodeURIComponent(`${message}\n\n—\n${name}\n${email}`);
+    window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
     setSubmitted(true);
   }
 
@@ -152,19 +159,19 @@ export function Contact() {
                 {submitted ? (
                   <>
                     <Check size={16} />
-                    Mensagem enviada
+                    E-mail preparado
                   </>
                 ) : (
                   <>
                     <Send size={16} />
-                    Enviar mensagem
+                    Escrever por e-mail
                   </>
                 )}
               </button>
               {submitted && (
                 <p className="text-center font-mono text-xs text-ink-muted">
-                  Este formulário ainda não está conectado a um backend —
-                  use e-mail ou LinkedIn por enquanto.
+                  Abrimos o seu app de e-mail com a mensagem pronta. Se nada
+                  abriu, copie o e-mail ao lado ou use o LinkedIn.
                 </p>
               )}
             </div>

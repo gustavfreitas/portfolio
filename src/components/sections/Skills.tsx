@@ -14,7 +14,7 @@ export function Skills() {
           description="Ferramentas organizadas por área de aplicação — da análise à engenharia de dados."
         />
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skillGroups.map((group, i) => (
             <Reveal key={group.category} delay={i * 0.06}>
               <div className="glow-card h-full rounded-lg p-6">

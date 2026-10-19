@@ -9,6 +9,8 @@ import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { BackToTop } from "@/components/ui/BackToTop";
 import { site } from "@/data/site";
 import "./globals.css";
 
@@ -51,9 +53,11 @@ export default function RootLayout({
         >
           Pular para o conteúdo
         </a>
+        <ScrollProgress />
         <Navbar />
         <main id="main-content">{children}</main>
         <Footer />
+        <BackToTop />
       </body>
     </html>
   );
