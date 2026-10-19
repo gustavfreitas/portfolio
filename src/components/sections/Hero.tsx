@@ -30,7 +30,7 @@ export function Hero() {
             {site.name}
           </h1>
 
-          <p className="mt-5 font-mono text-sm text-ink-secondary md:text-base">
+          <p className="mt-5 font-mono text-sm text-ink-secondary md:text-[1rem] md:leading-6">
             {site.role}
           </p>
 
