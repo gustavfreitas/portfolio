@@ -18,16 +18,17 @@ export const site = {
     title: "Gustavo Freitas | Data Analytics & Business Intelligence",
     description:
       "Portfolio de Gustavo Freitas — projetos em Data Analytics, Business Intelligence, Python, SQL, ETL e Power BI.",
-    url: "https://portfolio-tawny-one-99.vercel.app/#top",
+    url: "https://portfolio-tawny-one-99.vercel.app",
   },
   about: {
     summary:
-      "Estudante de Ciência da Computação em formação profissional na área de Dados, com experiência prática na construção de soluções envolvendo análise de dados, Business Intelligence, ETL e visualização. Interesse em transformar dados brutos em informações que apoiam decisões de negócio, com base sólida em Python, SQL e Power BI.",
+      "Estudante de Ciência da Computação em formação profissional na área de Dados, com experiência prática na construção de soluções envolvendo análise de dados, Business Intelligence, ETL e visualização. Mais recentemente, venho levando esse repertório para Machine Learning e IA Generativa, sempre com foco em transformar dados brutos em informações que apoiam decisões de negócio, com base sólida em Python, SQL e Power BI.",
     focus: [
       "Análise de dados e geração de indicadores de negócio",
       "Construção de pipelines ETL e modelagem de dados",
       "Dashboards e relatórios em Power BI",
       "Consultas e modelagem em SQL / PostgreSQL",
+      "Modelos de Machine Learning (classificação, regressão e clustering) e IA Generativa aplicada",
     ],
   },
   education: {
