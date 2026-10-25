@@ -55,8 +55,8 @@ export const projects: Project[] = [
     slug: "feedbacks-bancarios",
     title: "Pipeline ETL para Feedbacks Bancários utilizando IA e PostgreSQL",
     description:
-      "Pipeline completo de Customer Experience que utiliza dados sintéticos gerados por IA, tratamento de dados, ETL, PostgreSQL e análise orientada à geração de insights de negócio.",
-    category: ["ETL", "Data Analytics", "SQL", "Python"],
+      "Pipeline completo de Customer Experience sobre feedbacks sintéticos de um banco fictício (45 registros): ETL em PostgreSQL, auditoria de dados, KPIs de CX, score de priorização por tipo e canal e dashboard interativo de 4 páginas.",
+    category: ["ETL", "Data Analytics", "BI", "SQL", "Python"],
     technologies: [
       "Python",
       "Pandas",
@@ -66,15 +66,18 @@ export const projects: Project[] = [
       "ETL",
       "IA Generativa",
       "Prompt Engineering",
+      "Chart.js",
+      "GitHub Pages",
     ],
     featured: true,
     github: "https://github.com/gustavfreitas/feedback-bancario",
+    demo: "https://gustavfreitas.github.io/feedback-bancario/",
     problem:
       "Bancos recebem grandes volumes de feedback de clientes, mas raramente possuem um processo estruturado para transformar esse material em indicadores acionáveis de Customer Experience.",
     solution:
       "Construção de um pipeline ponta a ponta: geração de dados sintéticos realistas com IA, tratamento e padronização em Python, carga estruturada em PostgreSQL via ETL e análise em SQL orientada a insights de negócio.",
     result:
-      "Base de dados consistente e consultável, pronta para gerar indicadores de satisfação, categorização de reclamações e apoio a decisões de CX.",
+      "CSAT de 37,8% e 42,2% de feedbacks negativos; reclamações via Telefone e WhatsApp são os dois únicos grupos críticos (score 0,74 e 0,73), e a ausência de dado de produto é a maior lacuna da base.",
     context:
       "Feedbacks de clientes bancários costumam estar espalhados, sem padronização e sem estrutura analítica. Este projeto simula esse cenário de ponta a ponta, desde a origem do dado até a geração de insight.",
     objective:
@@ -90,6 +93,7 @@ export const projects: Project[] = [
       { label: "PostgreSQL" },
       { label: "SQL" },
       { label: "Análise" },
+      { label: "Dashboard" },
       { label: "Insights de Negócio" },
     ],
     modeling:
@@ -102,14 +106,28 @@ export const projects: Project[] = [
       "Consolidação dos resultados em insights de negócio",
     ],
     insights: [
-      "Identificação de categorias recorrentes de reclamação por segmento de cliente",
-      "Visão consolidada de volume de feedback ao longo do tempo",
-      "Base pronta para consumo por ferramentas de BI",
+      "Reclamações via Telefone e WhatsApp são os dois únicos grupos de prioridade Crítica (score 0,742 e 0,733), com recorrência de 2 a 3 meses, e concentram 6 dos 19 casos de Reclamação e Problema Técnico",
+      "Agosto/2026 foi o pior mês da série (nota 1,5 e 100% de feedbacks negativos), mas com apenas 4 registros: tratado como alerta, não como tendência",
+      "O campo de produto está vazio nas 45 linhas, o que impede saber se Pix, cartão ou app geram mais atrito; um tópico derivado do texto serve só como hipótese",
+      "Não há concentração 80/20: os 3 canais mais afetados somam 63,3% dos feedbacks negativos, então uma correção em um único canal não resolveria a maior parte do problema",
     ],
     resultsDetail: [
-      "Pipeline reprodutível, com etapas isoladas e testáveis",
-      "Base estruturada em PostgreSQL pronta para consultas analíticas",
-      "Fundação reutilizável para outros projetos de análise textual",
+      "KPIs: CSAT 37,8% (nota maior ou igual a 4), nota média 3,0/5, 42,2% de feedbacks negativos e taxa de reclamação de 26,7%; NPS não calculável (escala de 1 a 5)",
+      "Auditoria de dados documentada: 0% de nulos, 0 duplicidades e categorias padronizadas",
+      "Score de priorização por tipo e canal (volume 30%, impacto 30%, urgência 25%, recorrência 15%) com classes Crítico, Alto, Médio e Baixo",
+      "Dashboard interativo de 4 páginas (Visão Executiva, Customer Experience, Análise de Problemas e Recomendações), publicado no GitHub Pages",
+      "Relatório final com recomendações por área responsável e script de análise reproduzível",
+    ],
+    limitations: [
+      "Dados 100% fictícios, gerados por IA: o resultado serve para estudo e demonstração, não para decisões reais",
+      "Amostra pequena (45 registros): os percentuais por grupo são indicativos, não conclusivos",
+      "Sem campos de produto, tempo de resolução, região ou perfil do cliente",
+    ],
+    images: [
+      { src: "/projects/feedbacks-bancarios/dashboard-pagina-1.png", alt: "Dashboard, página Visão Executiva", width: 1440, height: 1864, caption: "Visão Executiva: KPIs, evolução da satisfação e ranking de prioridade" },
+      { src: "/projects/feedbacks-bancarios/dashboard-pagina-2.png", alt: "Dashboard, página Customer Experience", width: 1440, height: 1582, caption: "Customer Experience: satisfação por categoria, distribuição de notas e comparação por canal" },
+      { src: "/projects/feedbacks-bancarios/dashboard-pagina-3.png", alt: "Dashboard, página Análise de Problemas", width: 1440, height: 1788, caption: "Análise de Problemas: ranking tipo × canal, matriz impacto × urgência e Pareto" },
+      { src: "/projects/feedbacks-bancarios/dashboard-pagina-4.png", alt: "Dashboard, página Recomendações", width: 1440, height: 2500, caption: "Recomendações: insights executivos e ações por área responsável" },
     ],
   },
   {
