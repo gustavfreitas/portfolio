@@ -132,9 +132,9 @@ export const projects: Project[] = [
   },
   {
     slug: "telecom-churn-ltv",
-    title: "Telco Churn & Pricing: previsão de cancelamento com Machine Learning",
+    title: "Telco Churn & Pricing: quem vale a pena contatar para reter",
     description:
-      "Dois problemas de negócio em uma operadora de telecom (7.043 clientes): prever o churn com XGBoost e validar a consistência da precificação com Regressão Linear, gerando insights de retenção.",
+      "Previsão de cancelamento em uma operadora (7.043 clientes) transformada em decisão: probabilidades calibradas, regra de ganho esperado para escolher quem contatar e fila de retenção com os motivos de cada cliente.",
     category: ["Machine Learning", "Data Analytics", "Python"],
     technologies: [
       "Python",
@@ -142,6 +142,7 @@ export const projects: Project[] = [
       "scikit-learn",
       "XGBoost",
       "Regressão Linear",
+      "SHAP",
       "pytest",
       "GitHub Actions",
       "Ruff",
@@ -149,49 +150,68 @@ export const projects: Project[] = [
     featured: false,
     github: "https://github.com/gustavfreitas/telecom-churn-ltv",
     problem:
-      "A operadora perde clientes sem saber onde atuar primeiro, e não há como confirmar se a cobrança mensal segue a tabela de preços dos serviços contratados.",
+      "Saber a probabilidade de churn não diz quem vale a pena contatar: cada ação de retenção custa dinheiro, e o XGBoost com scale_pos_weight superestima as probabilidades, o que distorce qualquer conta de retorno.",
     solution:
-      "Pipelines do scikit-learn com XGBoost (churn, desbalanceamento tratado com scale_pos_weight) e Regressão Linear (MonthlyCharges), com análise exploratória e interpretabilidade para transformar o modelo em ações de negócio.",
+      "Pipelines do scikit-learn com XGBoost e baseline logístico, calibração das probabilidades (Platt) ajustada só com o treino e uma regra de ganho esperado (probabilidade × taxa de sucesso × receita de 12 meses − custo da ação). O resultado é uma fila de retenção em CSV com os 3 principais motivos de cada cliente (SHAP) e uma análise de sensibilidade às premissas. Uma Regressão Linear de MonthlyCharges complementa com uma lista de cobranças atípicas.",
     result:
-      "XGBoost com AUC-ROC de 0,845 no teste e recall de 0,79 para churn; regressão com R² de 0,999, que redescobre a tabela de preços e permite auditar cobranças atípicas pelos resíduos.",
+      "Com premissas ilustrativas, a decisão por ganho esperado rende cerca de 15% a mais que o corte de 0,5 e cerca de 10% a mais que contatar todos os clientes (US$ 54,7 mil contra 47,7 mil e 49,5 mil por 1.000 clientes). A calibração leva a probabilidade média de 40,1% para 26,7%, perto do churn real de 26,5%.",
     context:
-      "Dataset público Telco Customer Churn (IBM Sample Data Sets), com 7.043 clientes, 21 colunas e 26,5% de cancelamentos. O objetivo vai além de rodar algoritmos: extrair insights acionáveis para reduzir a perda de clientes e identificar inconsistências de faturamento.",
+      "Dataset público Telco Customer Churn (IBM Sample Data Sets), com 7.043 clientes, 21 colunas e 26,5% de cancelamentos. As premissas de custo e de sucesso da ação são ilustrativas, não vêm de uma operação real.",
     objective:
-      "Resolver dois problemas com algoritmos diferentes: classificação (churn) para retenção e regressão (MonthlyCharges) para consistência de precificação.",
+      "Ir além da métrica do modelo: definir quem receber a ação de retenção pelo retorno esperado e mostrar o quanto essa conclusão depende das premissas.",
     architecture:
-      "Código modular em src/ (dados, features, regressão, classificação, interpretabilidade e avaliação), scripts de treino, notebook de EDA, testes automatizados e integração contínua no GitHub Actions.",
+      "Código modular em src/ (dados, features, regressão, classificação, interpretabilidade, avaliação e negócio), scripts de treino, notebook de EDA, testes automatizados e integração contínua no GitHub Actions. O calibrador é ajustado em previsões out-of-fold do treino e o teste é usado uma única vez, para medir.",
     pipeline: [
       { label: "Dados brutos (CSV)" },
       { label: "Limpeza e EDA" },
       { label: "Pré-processamento (One-Hot, escala)" },
-      { label: "Regressão Linear / XGBoost" },
-      { label: "Validação cruzada 5-fold" },
-      { label: "Interpretabilidade e lista de risco" },
+      { label: "XGBoost + baseline logístico" },
+      { label: "Calibração (out-of-fold)" },
+      { label: "Ganho esperado e fila de retenção" },
     ],
     process: [
       "Análise exploratória do churn por contrato, tempo de casa, internet e pagamento",
       "Pré-processamento dentro de Pipeline do scikit-learn, sem vazamento entre treino e teste",
       "Baseline com Regressão Logística para comparar com o XGBoost",
-      "Importâncias por gain e por permutation, lado a lado",
-      "18 testes automatizados e lint com Ruff rodando em CI (Python 3.10 e 3.12)",
+      "Calibração Platt com previsões out-of-fold do treino e comparação de 6 estratégias de retenção no teste",
+      "Análise de sensibilidade ao custo da ação e à taxa de sucesso",
+      "29 testes automatizados (incluindo contas de ganho conferidas à mão) e lint com Ruff rodando em CI (Python 3.10 e 3.12)",
     ],
     insights: [
       "O tipo de contrato é a principal alavanca de retenção: churn de 42,7% no plano mensal, 11,3% no anual e 2,8% no bienal",
       "O risco se concentra no primeiro ano: 47,4% de churn entre 0 e 12 meses de casa contra 9,5% após 49 meses",
       "Fibra ótica (41,9%) e cheque eletrônico (45,3%) merecem investigação de qualidade, suporte e atrito de pagamento",
-      "Combinar probabilidade de churn com a mensalidade ordena a fila de retenção por receita em risco",
+      "A probabilidade bruta do XGBoost é inflada (média de 40,1% contra 26,5% de churn real); sem calibrar, a conta de retorno da campanha fica distorcida",
+      "Com ação barata (US$ 5), contatar todos empata com o modelo; quanto mais cara a ação, maior a vantagem de escolher quem contatar",
     ],
     resultsDetail: [
-      "Classificação: XGBoost com AUC-ROC de 0,845 no teste (0,846 ± 0,011 em CV), precision de 0,52, recall de 0,79 e F1 de 0,63",
-      "Leitura honesta: o XGBoost empata com a Regressão Logística (0,842), pois o sinal está em poucas variáveis quase lineares",
-      "Regressão: MAE de 0,79 e R² de 0,999 contra baseline da média com R² de 0,000",
+      "Classificação: XGBoost com AUC-ROC de 0,845 no teste (0,846 ± 0,011 em CV), recall de 0,79 e precision de 0,52 no corte de 0,5",
+      "Benefício por 1.000 clientes: US$ 54,7 mil (XGBoost calibrado), 47,7 mil (corte de 0,5), 49,5 mil (contatar todos) e 64,2 mil no limite teórico",
+      "Com ação de US$ 200, a regra antiga dá prejuízo (−US$ 25,5 mil) e o modelo calibrado ainda fica positivo (US$ 2,6 mil)",
+      "Leitura honesta: a Regressão Logística calibrada rende praticamente o mesmo (US$ 54,6 mil); o XGBoost empata com ela neste dataset",
+      "Regressão de MonthlyCharges com R² de 0,999 redescobre a tabela de preços; o maior desvio é de US$ 4,84, então a lista de auditoria é fraca como detector de erro",
     ],
     limitations: [
       "Associação não é causalidade: confirmar o efeito de um desconto em contrato exigiria teste A/B",
       "O R² próximo de 1 reflete a precificação aditiva do dataset, não um problema difícil resolvido por ML",
-      "Sem dados comportamentais, o teto de AUC do dataset fica perto de 0,85, e o limiar de decisão fixo em 0,5 não foi otimizado por custo",
+      "Sem dados comportamentais, o teto de AUC do dataset fica perto de 0,85",
+      "Custo da ação, taxa de sucesso (30%) e horizonte (12 meses) são premissas ilustrativas, e a receita em risco ignora margem e desconto",
     ],
     images: [
+      {
+        src: "/projects/telecom-churn-ltv/sensibilidade_retencao.png",
+        alt: "Benefício da campanha de retenção variando custo da ação e taxa de sucesso",
+        width: 1784,
+        height: 665,
+        caption: "Sensibilidade do benefício às premissas de negócio",
+      },
+      {
+        src: "/projects/telecom-churn-ltv/calibracao.png",
+        alt: "Curva de calibração das probabilidades do XGBoost antes e depois da calibração",
+        width: 809,
+        height: 731,
+        caption: "Calibração das probabilidades",
+      },
       {
         src: "/projects/telecom-churn-ltv/classificacao_confusao_roc.png",
         alt: "Matriz de confusão e curva ROC do modelo de churn",
