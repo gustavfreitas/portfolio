@@ -396,6 +396,8 @@ export const projects: Project[] = [
       "LLM",
       "pytest",
       "SQLite",
+      "GitHub Actions",
+      "Ruff",
     ],
     featured: false,
     github: "https://github.com/gustavfreitas/A.X.E.L",
@@ -404,11 +406,11 @@ export const projects: Project[] = [
     solution:
       "Pipeline desacoplado: classificação de intenção, montagem de prompt em camadas, chamada ao LLM (Ollama por padrão, agnóstico de provider) e resposta estruturada que não inventa causas quando falta contexto.",
     result:
-      "CLI funcional com memória opcional em SQLite e dataset de casos de teste que mede a classificação de intenção, pedidos ambíguos e tentativas de prompt injection.",
+      "O classificador de intenção acerta 14 de 16 pedidos (88%, IC 95% de 64% a 97%) com um modelo de 1,5 bilhão de parâmetros rodando local, e nenhuma das 10 tentativas de extrair o prompt interno vazou. 47 testes rodam em CI sem precisar do Ollama.",
     context:
       "Nasceu como desafio do bootcamp DIO (Dados, IA Generativa e Cibersegurança) e evoluiu para uma implementação autoral, com foco em Engenharia de Prompt e arquitetura desacoplada.",
     objective:
-      "Construir um assistente que roda localmente, com prompts organizados por responsabilidade e avaliação reprodutível a cada iteração.",
+      "Construir um assistente que roda localmente, com prompts organizados por responsabilidade, avaliação reprodutível a cada iteração e uma suíte de testes que roda sem o modelo.",
     pipeline: [
       { label: "Entrada em linguagem natural" },
       { label: "Classificação de intenção" },
@@ -420,13 +422,23 @@ export const projects: Project[] = [
       "Prompts separados por responsabilidade: identidade, segurança, intenção e formato de resposta",
       "Regra de segurança que protege o system prompt mesmo sob tentativa de prompt injection",
       "Sem execução de código arbitrário fornecido pelo usuário",
-      "Avaliação com pytest e relatório de accuracy gerado por script a cada mudança de prompt",
+      "Defesa em camadas contra vazamento do prompt: instrução de segurança, classificação de intenção e checagem da resposta no código",
+      "47 testes unitários com um LLM simulado (pipeline, parsing, memória, prompts, segurança) rodando em CI nas versões 3.11, 3.12 e 3.13 do Python, mais lint com Ruff",
+      "Relatório de accuracy por script, com intervalo de confiança e quebra por intenção, a cada mudança de prompt",
     ],
     insights: [
       "Versionar e medir prompts permite saber se uma mudança melhorou ou piorou o resultado",
       "Persistir histórico é opt-in de propósito, pois significa guardar trechos de código em texto puro em disco",
+      "Simular o LLM nos testes permite validar o pipeline inteiro de forma determinística e em milissegundos, deixando a avaliação com o modelo real para um script à parte",
+    ],
+    resultsDetail: [
+      "Classificação de intenção: 88% (14/16) com qwen2.5:1.5b; os dois erros foram pedidos em que o modelo se apoiou na palavra \"erro\" ou em KeyError",
+      "Segurança: 10 de 10 tentativas de extração sem vazamento no pipeline completo",
+      "Com 16 casos, o intervalo de confiança é largo, então o número serve para acompanhar mudanças de prompt, não como taxa geral de acerto",
     ],
     limitations: [
+      "A avaliação mede só a classificação da intenção, não a qualidade do diagnóstico gerado; o dataset é pequeno e escrito pelo próprio autor",
+      "A checagem de vazamento compara trechos literais: um vazamento traduzido ou parafraseado não seria detectado",
       "Versão atual restrita a Python e SQL, com Ollama rodando localmente como pré-requisito",
       "Roadmap: v2 com análise de dados como segundo domínio e v3 com API REST",
     ],
